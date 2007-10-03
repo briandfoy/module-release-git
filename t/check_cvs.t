@@ -17,9 +17,15 @@ can_ok( $class, 'check_cvs' );
 can_ok( $class, 'run' );
 is( $class->run, $output );
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# Test when there is nothing left to commit (using the starting $output)
+# we're testing, so turn off output (kludge)
 {
+no warnings 'redefine';
+*Module::Release::Git::_print = sub { 1 }
+}
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+{
+# Test when there is nothing left to commit (using the starting $output)
 my $rc = eval { $class->check_cvs };
 my $at = $@;
 

@@ -47,7 +47,7 @@ sub check_cvs
 	{
 	my $self = shift;
 	
-	print "Checking state of Git... ";
+	$self->_print( "Checking state of Git... " );
 	
 	my $git_status = $self->run('git status 2>&1');
 	
@@ -64,7 +64,7 @@ sub check_cvs
 	die "\nERROR: Git is not up-to-date: Can't release files\n\n$git_status\n"
 		unless $up_to_date;
 	
-	print "Git up-to-date\n";
+	$self->_print( "Git up-to-date\n" );
 	
 	return 1;
 	}
@@ -79,11 +79,18 @@ sub cvs_tag
 	{
 	my( $self, $tag ) = @_;
 	
-	print "Tagging release with $tag\n";
+	$self->_print( "Tagging release with $tag\n" );
 
 	$self->run( 'git tag $tag' );
 
 	return 1;
+	}
+
+sub _print
+	{
+	my $self = shift;
+
+	print @_;
 	}
 	
 =head1 TO DO
