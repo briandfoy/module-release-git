@@ -33,6 +33,8 @@ CVS repository.
 These methods are B<automatically> exported in to the callers namespace
 using Exporter.
 
+This module depends on the external git binary (so far).
+
 =cut
 
 =head2 C<check_cvs()>
@@ -41,77 +43,68 @@ Check the state of the Git repository.
 
 =cut
 
-sub check_cvs {
+sub check_cvs 
+	{
 	my $self = shift;
 	
 	print "Checking state of Git... ";
 	
-	my $git_update = $self->run('git status 2>&1');
+	my $git_status = $self->run('git status 2>&1');
 	
 	if( $? ) 
 		{
-		die sprintf("\nERROR: svn failed with non-zero exit status: %d\n\n"
+		die sprintf("\nERROR: git failed with non-zero exit status: %d\n\n"
 			. "Aborting release\n", $? >> 8);
 		}
 	
-	my $branch = $git_update =~ /^# On branch (\w+)/;
+	my $branch = $git_status =~ /^# On branch (\w+)/;
 	
-	$git_update =~ s/^#.*$//smg;
-	$git_update =~ s/^#\s+\(.*?\)$//mg;	
-	$git_update =~ s/^#\s*$//mg;	
-
-	my @svn_states = keys %message;
+	my $up_to_date = $git_status =~ /^nothing to commit \(working directory clean\)/m;
 	
-	my %svn_state;
-	foreach my $state (@svn_states) {
-	$svn_state{$state} = [ $svn_update =~ /$state\s+(.*)/gm ];
+	die "\nERROR: Git is not up-to-date: Can't release files\n\n$git_status\n"
+		unless $up_to_date;
 	
-	}
+	print "Git up-to-date\n";
 	
-	my $rule = "-" x 50;
-	my $count;
-	my $question_count;
-	
-	foreach my $key (sort keys %svn_state) {
-	my $list = $svn_state{$key};
-	next unless @$list;
-	$count += @$list unless $key eq qr/^\?......./;
-	$question_count += @$list if $key eq qr/^\?......./;
-	
-	local $" = "\n\t";
-	print "\n\t$message{$key}\n\t$rule\n\t@$list\n";
-	}
-	
-	die "\nERROR: Subversion is not up-to-date ($count files): Can't release files\n"
-	if $count;
-	
-	if($question_count) {
-	print "\nWARNING: Subversion is not up-to-date ($question_count files unknown); ",
-	  "continue anwyay? [Ny] " ;
-	die "Exiting\n" unless <> =~ /^[yY]/;
-	}
-	
-	print "Subversion up-to-date\n";
+	return 1;
 	}
 
+=head2 C<cvs_tag(TAG)>
 
+Tag the release in local Git.
 
+=cut
 
+sub cvs_tag 
+	{
+	my( $self, $tag ) = @_;
+	
+	print "Tagging release with $tag\n";
+
+	$self->run( 'git tag $tag' );
+
+	return 1;
+	}
+	
 =head1 TO DO
 
+=over 4
+
+=item Use Gitlib.pm whenever it exists
+
+=item More options for tagging
+
+=back
 
 =head1 SEE ALSO
 
+L<Module::Release::Subversion>, L<Module::Release>
 
 =head1 SOURCE AVAILABILITY
 
-This source is part of a SourceForge project which always has the
-latest sources in CVS, as well as all of the previous releases.
-
-	http://sourceforge.net/projects/brian-d-foy/
-
-If, for some reason, I disappear from the world, one of the other
-members of the project can shepherd this module appropriately.
+So far this is in a private git repository. It's only private because I'm
+lazy. I can send it to you if you like, and I promise to set up something
+public Real Soon Now.
 
 =head1 AUTHOR
 

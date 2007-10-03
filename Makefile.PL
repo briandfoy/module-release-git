@@ -5,11 +5,15 @@ eval "use Test::Manifest 1.14";
 
 WriteMakefile(
 	'NAME'	       => 'Module::Release::Git',
+	'ABSTRACT'     => 'Use Git instead of CVS with Module::Release',
 	'VERSION_FROM' => 'lib/Git.pm',
 	'LICENSE'      => 'perl',
+	'AUTHOR'       => 'brian d foy <bdfoy@gmail.com>',
 	
 	'PREREQ_PM'    => { 
-		'Test::More' => '0',
+		'Test::More'      => '0',
+		'Module::Release' => '0',
+		
 		},
 
 	'PM'           => {
