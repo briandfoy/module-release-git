@@ -7,7 +7,7 @@ use base qw(Exporter Module::Release);
 
 our @EXPORT = qw(check_cvs cvs_tag);
 
-our $VERSION = '0.10';
+our $VERSION = '0.10_01';
 
 =head1 NAME
 
