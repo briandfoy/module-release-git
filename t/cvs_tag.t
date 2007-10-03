@@ -10,6 +10,14 @@ use_ok( $class );
 
 can_ok( $class, 'cvs_tag' );
 
+{
+no warnings 'redefine';
+
+*Module::Release::Git::_print = sub { 1 }
+}
+
+ok( $class->cvs_tag( 'foo' ), "Returns true (whoop-de-do!)" );
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 =pod
 
