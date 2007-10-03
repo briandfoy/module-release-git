@@ -6,3 +6,5 @@ blib
 Makefile
 .svn
 CVS
+*.gz
+Module-*
