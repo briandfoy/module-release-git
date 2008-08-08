@@ -16,11 +16,6 @@ If you want to read it before you install it, you can use
 perldoc directly on the module file.
 
 	perldoc  lib/Git.pm
-	
-This module is also in CVS on SourceForge
-
-	http://sourceforge.net/projects/brian-d-foy/
-
 
 Enjoy, 
 

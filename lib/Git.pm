@@ -3,25 +3,20 @@ package Module::Release::Git;
 
 use strict;
 use warnings;
-use base qw(Exporter Module::Release);
+use base qw(Exporter);
 
-our @EXPORT = qw(check_cvs cvs_tag);
+our @EXPORT = qw(check_cvs cvs_tag make_cvs_tag);
 
-our $VERSION = '0.10_01';
+our $VERSION = '0.10_02';
 
 =head1 NAME
 
-Module::Release::Git - Use Git instead of CVS with Module::Release
+Module::Release::Git - Use Git with Module::Release
 
 =head1 SYNOPSIS
 
-In F<.releaserc>
-
-  release_subclass Module::Release::Git
-
-In your subclasses of Module::Release:
-
-  use base qw(Module::Release::Git);
+The release script automatically loads this module if it sees a 
+F<.git> directory. The module exports check_cvs, cvs_tag, and make_cvs_tag.
 
 =head1 DESCRIPTION
 
@@ -86,6 +81,24 @@ sub cvs_tag
 	return 1;
 	}
 
+=item make_cvs_tag
+
+By default, examines the name of the remote file
+(i.e. F<Foo-Bar-0.04.tar.gz>) and constructs a tag string like
+C<RELEASE_0_04> from it.  Override this method if you want to use a
+different tagging scheme, or don't even call it.
+
+=cut
+
+sub make_cvs_tag
+	{
+	my $self = shift;
+	my( $major, $minor ) = $self->{remote}
+		=~ /(\d+) \. (\d+(?:_\d+)?) (?:\. tar \. gz)? $/xg;
+
+	return "RELEASE_${major}_${minor}";
+	}
+
 sub _print
 	{
 	my $self = shift;
@@ -119,7 +132,7 @@ brian d foy, C<< <bdfoy@cpan.org> >>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2007, brian d foy, All Rights Reserved.
+Copyright (c) 2007-2008, brian d foy, All Rights Reserved.
 
 You may redistribute this under the same terms as Perl itself.
 
