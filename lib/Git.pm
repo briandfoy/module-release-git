@@ -30,9 +30,9 @@ using Exporter.
 
 This module depends on the external git binary (so far).
 
-=cut
+=over 4
 
-=head2 C<check_cvs()>
+=item C<check_cvs()>
 
 Check the state of the Git repository.
 
@@ -64,7 +64,7 @@ sub check_cvs
 	return 1;
 	}
 
-=head2 C<cvs_tag(TAG)>
+=item C<cvs_tag(TAG)>
 
 Tag the release in local Git.
 
@@ -105,6 +105,8 @@ sub _print
 
 	print @_;
 	}
+
+=back
 	
 =head1 TO DO
 
