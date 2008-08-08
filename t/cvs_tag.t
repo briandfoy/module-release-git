@@ -30,12 +30,17 @@ the test run to try different things.
 =cut
 
 BEGIN {
-our $output = <<"HERE";
+package Module::Release::Git;
+use vars qw( $run_output $fine_output
+	);
+
+$fine_output = <<"HERE";
 # On branch master
 nothing to commit (working directory clean)
 HERE
 
 no warnings 'redefine';
-use Module::Release; # load before redefine
-*Module::Release::run = sub { $output; }
+package Module::Release::Git; # load before redefine
+sub run { $run_output }
 }
+
