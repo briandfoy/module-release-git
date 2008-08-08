@@ -52,6 +52,8 @@ sub check_cvs
 			. "Aborting release\n", $? >> 8);
 		}
 	
+	no warnings 'uninitialized';
+
 	my $branch = $git_status =~ /^# On branch (\w+)/;
 	
 	my $up_to_date = $git_status =~ /^nothing to commit \(working directory clean\)/m;

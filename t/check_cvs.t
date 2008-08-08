@@ -26,6 +26,8 @@ no warnings 'redefine';
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 {
 # Test when there is nothing left to commit (using the starting $output)
+local $Module::Release::Git::run_output = $Module::Release::Git::fine_output;
+
 my $rc = eval { $class->check_cvs };
 my $at = $@;
 
@@ -35,16 +37,23 @@ ok( $rc, "(Nothing left to commit) returns true (good)" );
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Test when there is a new file
-foreach my $try ( $newfile_output, $changedfile_output,
-	$untrackedfile_output, $combined_output )
+foreach my $try (qw(newfile_output changedfile_output
+	untrackedfile_output combined_output ) )
 	{
-	our $output = $try;
-
+	no strict 'refs';
+	local $Module::Release::Git::run_output = 
+		${ "Module::Release::Git::$try" };
+		
+	#print STDERR "try is $Module::Release::Git::run_output\n";
+	
 	my $rc = eval { $class->check_cvs };
 	my $at = $@;
 	
+	#print STDERR "At is $@\n";
+	
 	ok( defined $at, "(Dirty working dir) \$@ defined (good)" );
 	ok( ! $rc, "(Dirty working dir) returns true (good)" );
+	like( $at, qr/not up-to-date/, "Reports that Git is not up-to-date" );
 	}
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -59,14 +68,20 @@ the test run to try different things.
 =cut
 
 BEGIN {
-our $output = <<"HERE";
+package Module::Release::Git;
+use vars qw( $run_output $fine_output
+	$newfile_output $changedfile_output
+	$untrackedfile_output $combined_output
+	);
+
+$fine_output = <<"HERE";
 # On branch master
 nothing to commit (working directory clean)
 HERE
 
 no warnings 'redefine';
-use Module::Release; # load before redefine
-*Module::Release::run = sub { $output; };
+package Module::Release::Git; # load before redefine
+sub run { $run_output }
 
 $newfile_output = <<"HERE";
 # On branch master
