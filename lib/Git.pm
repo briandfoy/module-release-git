@@ -46,10 +46,10 @@ sub check_cvs
 	
 	my $git_status = $self->run('git status 2>&1');
 	
-	if( $? ) 
+	if( $? != 256 ) 
 		{
 		die sprintf("\nERROR: git failed with non-zero exit status: %d\n\n"
-			. "Aborting release\n", $? >> 8);
+			. "Aborting release\n", $? );
 		}
 	
 	no warnings 'uninitialized';
