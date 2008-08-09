@@ -45,23 +45,17 @@ sub check_cvs
 	$self->_print( "Checking state of Git... " );
 	
 	my $git_status = $self->run('git status 2>&1');
-	
-	if( $? != 256 ) 
-		{
-		die sprintf("\nERROR: git failed with non-zero exit status: %d\n\n"
-			. "Aborting release\n", $? );
-		}
-	
+		
 	no warnings 'uninitialized';
 
 	my $branch = $git_status =~ /^# On branch (\w+)/;
 	
 	my $up_to_date = $git_status =~ /^nothing to commit \(working directory clean\)/m;
 	
-	die "\nERROR: Git is not up-to-date: Can't release files\n\n$git_status\n"
+	$self->_die( "\nERROR: Git is not up-to-date: Can't release files\n\n$git_status\n" )
 		unless $up_to_date;
 	
-	$self->_print( "Git up-to-date\n" );
+	$self->_print( "Git up-to-date on branch $branch\n" );
 	
 	return 1;
 	}
@@ -99,13 +93,6 @@ sub make_cvs_tag
 		=~ /(\d+) \. (\d+(?:_\d+)?) (?:\. tar \. gz)? $/xg;
 
 	return "RELEASE_${major}_${minor}";
-	}
-
-sub _print
-	{
-	my $self = shift;
-
-	print @_;
 	}
 
 =back
