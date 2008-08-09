@@ -1,0 +1,7 @@
+0.10_02 - Sat Aug  9 03:10:38 2008
+	* Clean up the module to work with the latest version of 
+	Module::Release.
+	* The git command seems to exit with 1 when everything works.
+	I don't know what it exits with when it fails, so don't 
+	bother to check for the exit value right now.
+
