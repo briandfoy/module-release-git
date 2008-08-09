@@ -20,7 +20,8 @@ is( $class->run, $output );
 # we're testing, so turn off output (kludge)
 {
 no warnings 'redefine';
-*Module::Release::Git::_print = sub { 1 }
+*Module::Release::Git::_print = sub { 1 };
+*Module::Release::Git::_die   = sub { my $self = shift; die @_ };
 }
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
