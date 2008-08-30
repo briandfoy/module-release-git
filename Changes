@@ -5,3 +5,6 @@
 	I don't know what it exits with when it fails, so don't 
 	bother to check for the exit value right now.
 
+0.10_03 - Fri Aug 29 20:09:15 2008
+	* Fixed a bug in cvs_tag where nothing was tagged
+
