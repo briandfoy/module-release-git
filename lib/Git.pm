@@ -32,7 +32,7 @@ This module depends on the external git binary (so far).
 
 =over 4
 
-=item C<check_cvs()>
+=item check_cvs()
 
 Check the state of the Git repository.
 
@@ -60,7 +60,7 @@ sub check_cvs
 	return 1;
 	}
 
-=item C<cvs_tag(TAG)>
+=item cvs_tag(TAG)
 
 Tag the release in local Git.
 
@@ -69,6 +69,8 @@ Tag the release in local Git.
 sub cvs_tag 
 	{
 	my( $self, $tag ) = @_;
+	
+	$tag ||= $self->make_cvs_tag;
 	
 	$self->_print( "Tagging release with $tag\n" );
 
