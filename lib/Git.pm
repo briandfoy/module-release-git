@@ -74,7 +74,7 @@ sub cvs_tag
 	
 	$self->_print( "Tagging release with $tag\n" );
 
-	$self->run( 'git tag $tag' );
+	$self->run( "git tag $tag" );
 
 	return 1;
 	}
@@ -90,10 +90,14 @@ different tagging scheme, or don't even call it.
 
 sub make_cvs_tag
 	{
-	my $self = shift;
-	my( $major, $minor ) = $self->{remote}
-		=~ /(\d+) \. (\d+(?:_\d+)?) (?:\. tar \. gz)? $/xg;
+	no warnings 'uninitialized';
+	
+	my( $major, $minor ) = $_[0]->{remote}
+		=~ /(\d+) \. (\d+(?:_\d+)?) (?: \.tar\.gz | \.tgz | \.zip )? $/xg;
 
+	$_[0]->_warn( "Could not parse remote [$_[0]->{remote}] to get major and minor versions" )
+		unless defined $major;
+		
 	return "RELEASE_${major}_${minor}";
 	}
 
@@ -115,9 +119,9 @@ L<Module::Release::Subversion>, L<Module::Release>
 
 =head1 SOURCE AVAILABILITY
 
-So far this is in a private git repository. It's only private because I'm
-lazy. I can send it to you if you like, and I promise to set up something
-public Real Soon Now.
+This module is in Github:
+
+	git://github.com/briandfoy/module--release--git.git
 
 =head1 AUTHOR
 

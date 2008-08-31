@@ -2,6 +2,6 @@
 load.t
 pod.t
 pod_coverage.t
-prereq.t
+#prereq.t
 check_cvs.t
 cvs_tag.t
