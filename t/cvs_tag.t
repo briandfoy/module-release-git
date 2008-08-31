@@ -4,14 +4,10 @@ use vars qw($run_output);
 
 use Test::More 'no_plan';
 
-my $module_release = "Module::Release";
-
 my $class  = 'Module::Release::Git';
 my $method = 'cvs_tag';
 
-use_ok( $module_release );
-
-local $^W = 0;
+use_ok( $class );
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 =pod
@@ -23,16 +19,23 @@ is passed to it.
 
 =cut
 
-my $release = $module_release->new;
-$module_release->load_mixin( $class );
-can_ok( $module_release, $method );
-
 {
+package Null;
+
+sub new { bless {}, __PACKAGE__ }
+sub AUTOLOAD { "" }
+
+package main;
 no warnings qw(redefine once);
-*Module::Release::run    = sub { $main::run_output = $_[1] };
-*Module::Release::_warn  = sub { 1 };
-*Module::Release::_print = sub { 1 };
+*Module::Release::Git::run         = sub { $main::run_output = $_[1] };
+*Module::Release::Git::remote_file = sub { $_[0]->{remote_file} };
+*Module::Release::Git::_warn       = sub { 1 };
+*Module::Release::Git::_print      = sub { 1 };
 }
+
+my $release = bless {}, $class;
+can_ok( $release, $method );
+
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Try it with an argument
