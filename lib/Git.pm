@@ -7,7 +7,7 @@ use base qw(Exporter);
 
 our @EXPORT = qw(check_cvs cvs_tag make_cvs_tag);
 
-our $VERSION = '0.10_04';
+our $VERSION = '0.10_05';
 
 =head1 NAME
 
@@ -92,7 +92,7 @@ sub make_cvs_tag
 	{
 	no warnings 'uninitialized';
 	
-	my( $major, $minor ) = $_[0]->{remote}
+	my( $major, $minor ) = $_[0]->{remote_file}
 		=~ /(\d+) \. (\d+(?:_\d+)?) (?: \.tar\.gz | \.tgz | \.zip )? $/xg;
 
 	$_[0]->_warn( "Could not parse remote [$_[0]->{remote}] to get major and minor versions" )
