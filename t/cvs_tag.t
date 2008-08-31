@@ -37,7 +37,8 @@ HERE
 
 no warnings 'redefine';
 package Module::Release::Git; # load before redefine
-sub run { $main::run_output = $_[1] }
+sub run   { $main::run_output = $_[1] }
+sub _warn { 1 }
 }
 
 my $release = bless {}, $class;
