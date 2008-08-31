@@ -7,7 +7,7 @@ use base qw(Exporter);
 
 our @EXPORT = qw(check_cvs cvs_tag make_cvs_tag);
 
-our $VERSION = '0.10_05';
+our $VERSION = '0.10_06';
 
 local $^W = 0;
 
