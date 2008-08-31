@@ -53,7 +53,7 @@ is( $run_output, "git tag $tag",
 }
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# Try it with no argument, nothing in remote
+# Try it with no argument, nothing in remote_file
 {
 ok( $release->$method( ), "Returns true (whoop-de-do!)" );
 is( $run_output, "git tag RELEASE__", 
@@ -61,9 +61,9 @@ is( $run_output, "git tag RELEASE__",
 }
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# Try it with no argument, nothing in remote
+# Try it with no argument, nothing in remote_file
 {
-local $release->{remote} = 'Foo-Bar-45.98.tgz';
+local $release->{remote_file} = 'Foo-Bar-45.98.tgz';
 
 ok( $release->$method( ), "Returns true (whoop-de-do!)" );
 is( $run_output, "git tag RELEASE_45_98", 
