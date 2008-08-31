@@ -4,17 +4,14 @@ use vars qw($run_output);
 
 use Test::More 'no_plan';
 
+my $module_release = "Module::Release";
+
 my $class  = 'Module::Release::Git';
 my $method = 'cvs_tag';
 
-use_ok( $class );
-can_ok( $class, $method );
+use_ok( $module_release );
 
-{
-no warnings 'redefine';
-
-*Module::Release::Git::_print = sub { 1 }
-}
+local $^W = 0;
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 =pod
@@ -26,29 +23,23 @@ is passed to it.
 
 =cut
 
-BEGIN {
-package Module::Release::Git;
-use vars qw( $run_output $fine_output );
+my $release = $module_release->new;
+$module_release->load_mixin( $class );
+can_ok( $module_release, $method );
 
-$fine_output = <<"HERE";
-# On branch master
-nothing to commit (working directory clean)
-HERE
-
-no warnings 'redefine';
-package Module::Release::Git; # load before redefine
-sub run   { $main::run_output = $_[1] }
-sub _warn { 1 }
+{
+no warnings qw(redefine once);
+*Module::Release::run    = sub { $main::run_output = $_[1] };
+*Module::Release::_warn  = sub { 1 };
+*Module::Release::_print = sub { 1 };
 }
-
-my $release = bless {}, $class;
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # Try it with an argument
 {
 my $tag = 'foo';
-ok( $release->$method( $tag ), "Returns true (whoop-de-do!)" );
-is( $run_output, "git tag $tag", 
+ok( $release->$method( $tag ), "$method returns true (whoop-de-do!)" );
+is( $main::run_output, "git tag $tag", 
 	"Run output sees the right tag with an argument" );
 }
 
@@ -56,16 +47,26 @@ is( $run_output, "git tag $tag",
 # Try it with no argument, nothing in remote_file
 {
 ok( $release->$method( ), "Returns true (whoop-de-do!)" );
-is( $run_output, "git tag RELEASE__", 
+is( $main::run_output, "git tag RELEASE__", 
 	"Run output sees the right tag with no argument, no remote" );
 }
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# Try it with no argument, nothing in remote_file
+# Try it with no argument, version in remote_file
 {
-local $release->{remote_file} = 'Foo-Bar-45.98.tgz';
+$release->{remote_file} = 'Foo-Bar-45.98.tgz';
 
-ok( $release->$method( ), "Returns true (whoop-de-do!)" );
-is( $run_output, "git tag RELEASE_45_98", 
+ok( $release->$method(), "$method returns true (whoop-de-do!)" );
+is( $main::run_output, "git tag RELEASE_45_98", 
+	"Run output sees the right tag with no argument, remote set" );
+}
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# Try it with no argument, dev version in remote_file
+{
+$release->{remote_file} = 'Foo-Bar-45.98_01.tgz';
+
+ok( $release->$method(), "$method returns true (whoop-de-do!)" );
+is( $main::run_output, "git tag RELEASE_45_98_01", 
 	"Run output sees the right tag with no argument, remote set" );
 }

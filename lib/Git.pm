@@ -9,6 +9,8 @@ our @EXPORT = qw(check_cvs cvs_tag make_cvs_tag);
 
 our $VERSION = '0.10_05';
 
+local $^W = 0;
+
 =head1 NAME
 
 Module::Release::Git - Use Git with Module::Release
@@ -74,6 +76,8 @@ sub cvs_tag
 	
 	$self->_print( "Tagging release with $tag\n" );
 
+	return 0 unless defined $tag;
+	
 	$self->run( "git tag $tag" );
 
 	return 1;
@@ -92,7 +96,7 @@ sub make_cvs_tag
 	{
 	no warnings 'uninitialized';
 	
-	my( $major, $minor ) = $_[0]->{remote_file}
+	my( $major, $minor ) = $_[0]->remote_file
 		=~ /(\d+) \. (\d+(?:_\d+)?) (?: \.tar\.gz | \.tgz | \.zip )? $/xg;
 
 	$_[0]->_warn( "Could not parse remote [$_[0]->{remote}] to get major and minor versions" )
