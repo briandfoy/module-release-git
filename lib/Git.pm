@@ -1,4 +1,3 @@
-# $Id$
 package Module::Release::Git;
 
 use strict;
