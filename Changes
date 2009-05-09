@@ -5,6 +5,9 @@
 	I don't know what it exits with when it fails, so don't 
 	bother to check for the exit value right now.
 
+0.12_01 - Sat May  9 03:10:24 2009
+	* Some method name and doc fixes.
+
 0.10_08 - Sat Aug 30 20:28:47 2008
 	* bar:wq
 
