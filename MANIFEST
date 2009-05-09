@@ -5,10 +5,9 @@ LICENSE
 Makefile.PL
 MANIFEST			This list of files
 README
-t/check_cvs.t
-t/cvs_tag.t
+t/check_vcs.t
+t/vcs_tag.t
 t/load.t
 t/pod.t
 t/pod_coverage.t
-t/prereq.t
 t/test_manifest

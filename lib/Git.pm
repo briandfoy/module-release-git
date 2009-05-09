@@ -6,7 +6,7 @@ use base qw(Exporter);
 
 our @EXPORT = qw(check_vcs vcs_tag make_vcs_tag);
 
-our $VERSION = '0.12_01';
+our $VERSION = '0.12_02';
 
 =head1 NAME
 

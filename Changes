@@ -1,15 +1,9 @@
-0.10_02 - Sat Aug  9 03:10:38 2008
+0.12_01 - Sat Aug  9 03:10:38 2008
 	* Clean up the module to work with the latest version of 
 	Module::Release.
 	* The git command seems to exit with 1 when everything works.
 	I don't know what it exits with when it fails, so don't 
 	bother to check for the exit value right now.
-
-0.12_01 - Sat May  9 03:10:24 2009
-	* Some method name and doc fixes.
-
-0.10_08 - Sat Aug 30 20:28:47 2008
-	* bar:wq
 
 0.10_06 - Sat Aug 30 20:23:05 2008
 	* okay, this should really fix cvs_tag
