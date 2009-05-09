@@ -5,6 +5,9 @@
 	I don't know what it exits with when it fails, so don't 
 	bother to check for the exit value right now.
 
+0.12_02 - Sat May  9 03:23:38 2009
+	* Distro cleaning, no big whoop
+
 0.10_06 - Sat Aug 30 20:23:05 2008
 	* okay, this should really fix cvs_tag
 
