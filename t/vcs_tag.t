@@ -5,7 +5,7 @@ use vars qw($run_output);
 use Test::More 'no_plan';
 
 my $class  = 'Module::Release::Git';
-my $method = 'cvs_tag';
+my $method = 'vcs_tag';
 
 use_ok( $class );
 

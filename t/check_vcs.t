@@ -8,10 +8,11 @@ use vars qw(
 
 use Test::More 'no_plan';
 
-my $class = 'Module::Release::Git';
+my $class  = 'Module::Release::Git';
+my $method = 'check_vcs';
 
 use_ok( $class );
-can_ok( $class, 'check_cvs' );
+can_ok( $class, $method );
 
 # are we where we think we're starting?
 can_ok( $class, 'run' );
@@ -29,7 +30,7 @@ no warnings 'redefine';
 # Test when there is nothing left to commit (using the starting $output)
 local $Module::Release::Git::run_output = $Module::Release::Git::fine_output;
 
-my $rc = eval { $class->check_cvs };
+my $rc = eval { $class->$method() };
 my $at = $@;
 
 ok( ! $at, "(Nothing left to commit) \$@ undef (good)" );
@@ -47,7 +48,7 @@ foreach my $try (qw(newfile_output changedfile_output
 		
 	#print STDERR "try is $Module::Release::Git::run_output\n";
 	
-	my $rc = eval { $class->check_cvs };
+	my $rc = eval { $class->$method() };
 	my $at = $@;
 	
 	#print STDERR "At is $@\n";
