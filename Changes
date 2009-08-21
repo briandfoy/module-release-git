@@ -1,4 +1,8 @@
+Changes for Module::Release::Git
 
+0.13 - Fri Aug 21 11:32:16 CDT 2009
+	* The same as 0.12_02, but as a full release
+	
 0.12_02 - Sat May  9 03:23:38 2009
 	* Distro cleaning, no big whoop
 
