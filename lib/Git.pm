@@ -7,7 +7,7 @@ use base qw(Exporter);
 our @EXPORT = qw(check_vcs vcs_tag make_vcs_tag);
 
 use vars qw($VERSION);
-$VERSION = '0.13';
+$VERSION = '0.14';
 
 =head1 NAME
 
@@ -48,7 +48,7 @@ sub check_vcs
 		
 	no warnings 'uninitialized';
 
-	my $branch = $git_status =~ /^# On branch (\w+)/;
+	my( $branch ) = $git_status =~ /^# On branch (\w+)/;
 	
 	my $up_to_date = $git_status =~ /^nothing to commit \(working directory clean\)/m;
 	
