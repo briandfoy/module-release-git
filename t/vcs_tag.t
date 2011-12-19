@@ -2,7 +2,7 @@
 use strict;
 use vars qw($run_output);
 
-use Test::More 'no_plan';
+use Test::More tests => 11;
 
 my $class  = 'Module::Release::Git';
 my $method = 'vcs_tag';
@@ -36,40 +36,63 @@ no warnings qw(redefine once);
 my $release = bless {}, $class;
 can_ok( $release, $method );
 
+# Define our test cases.  'tag' is passed to ->vcs_tag, and 'expect'
+# is the tag we expect to get supplied to Git.  If remote_file is
+# specified, then this key and it's valye is inserted into the
+# $release object, emulating the release of a distro with that file
+# name.
+my @cases = (
+    {
+        desc => 'an arbitrary tag argument', 
+        tag => 'foo',
+        expect => 'foo',
+    },
+    {
+        desc => 'no tag info',
+        tag => undef,
+        expect => 'RELEASE__',
+    },
+    {
+        desc => 'two-number version',
+        tag => undef, remote_file => 'Foo-Bar-45.98.tgz',
+        expect => 'RELEASE_45_98',
+    },
+    {
+        desc => 'two-number dev version',
+        tag => undef, remote_file => 'Foo-Bar-45.98_01.tgz',
+        expect => 'RELEASE_45_98_01',
+    },
+);
+
+
+
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# Try it with an argument
-{
-my $tag = 'foo';
-ok( $release->$method( $tag ), "$method returns true (whoop-de-do!)" );
-is( $main::run_output, "git tag $tag", 
-	"Run output sees the right tag with an argument" );
-}
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# Try it with no argument, nothing in remote_file
-{
-ok( $release->$method( ), "Returns true (whoop-de-do!)" );
-is( $main::run_output, "git tag RELEASE__", 
-	"Run output sees the right tag with no argument, no remote" );
-}
+# quotes values, but maps undefs to '<undef>'
+sub defang_undef {
+    return map { defined $_? "'$_'" : '<undef>' } @_;
+} 
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# Try it with no argument, version in remote_file
-{
-$release->{remote_file} = 'Foo-Bar-45.98.tgz';
 
-ok( $release->$method(), "$method returns true (whoop-de-do!)" );
-is( $main::run_output, "git tag RELEASE_45_98", 
-	"Run output sees the right tag with no argument, remote set" );
-}
+foreach my $case (@cases) {
+    # Set remote_file if one is supplied
+    $release->{remote_file} = $case->{remote_file}
+        if defined $case->{remote_file};
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# Try it with no argument, dev version in remote_file
-{
-$release->{remote_file} = 'Foo-Bar-45.98_01.tgz';
-
-ok( $release->$method(), "$method returns true (whoop-de-do!)" );
-is( $main::run_output, "git tag RELEASE_45_98_01", 
-	"Run output sees the right tag with no argument, remote set" );
+    ok( $release->$method( $case->{tag} ),
+        sprintf(
+            "$case->{desc}: ->%s(%s) returns true with %s",
+            $method,
+            defang_undef @$case{qw(tag remote_file)},
+        ),
+    );
+    my $expected_cmd = "git tag $case->{expect}";
+    is( $main::run_output,
+        $expected_cmd,
+	sprintf(
+            " and run output sees '%s'",
+            $expected_cmd,
+        ),
+    );
 }
