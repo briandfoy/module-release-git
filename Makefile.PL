@@ -12,7 +12,7 @@ WriteMakefile(
 	'AUTHOR'       => 'brian d foy <bdfoy@cpan.org>',
 	
 	'BUILD_REQUIRES' => { 
-		'Test::More'      => '0',
+		'Test::More'      => '0.98',
 		'Module::Release' => '2.06',		
 		},
 
