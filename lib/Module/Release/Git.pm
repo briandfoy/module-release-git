@@ -2,12 +2,12 @@ package Module::Release::Git;
 
 use strict;
 use warnings;
-use base qw(Exporter);
+use Exporter qw(import);
 
-our @EXPORT = qw(check_vcs vcs_tag make_vcs_tag);
+our @EXPORT = qw(check_vcs vcs_tag make_vcs_tag get_vcs_tag_format _get_time);
 
 use vars qw($VERSION);
-$VERSION = '0.14';
+$VERSION = '0.15';
 
 =head1 NAME
 
@@ -38,8 +38,7 @@ Check the state of the Git repository.
 
 =cut
 
-sub check_vcs 
-	{
+sub check_vcs {
 	my $self = shift;
 	
 	$self->_print( "Checking state of Git... " );
@@ -66,8 +65,7 @@ Tag the release in local Git.
 
 =cut
 
-sub vcs_tag 
-	{
+sub vcs_tag {
 	my( $self, $tag ) = @_;
 	
 	$tag ||= $self->make_vcs_tag;
@@ -85,22 +83,49 @@ sub vcs_tag
 
 By default, examines the name of the remote file
 (i.e. F<Foo-Bar-0.04.tar.gz>) and constructs a tag string like
-C<RELEASE_0_04> from it.  Override this method if you want to use a
+C<release-0.04> from it.  Override this method if you want to use a
 different tagging scheme, or don't even call it.
 
 =cut
 
-sub make_vcs_tag
-	{
-	no warnings 'uninitialized';
+sub make_vcs_tag {
+	my( $self, $tag_format ) = @_;
+	$tag_format = defined $tag_format ? $tag_format : $self->get_vcs_tag_format;
 	
-	my( $major, $minor ) = $_[0]->remote_file
-		=~ /(\d+) \. (\d+(?:_\d+)?) (?: \.tar\.gz | \.tgz | \.zip )? $/xg;
+	my $version = eval { $self->dist_version };
+	my $err = $@;
+	unless( defined $version ) {
+		$self->_warn( "Could not get version [$err]" );
+		$version = $self->_get_time;
+		}
+	
+	$tag_format =~ s/%v/$version/e;
+	
+	return $tag_format;
+	}
 
-	$_[0]->_warn( "Could not parse remote [$_[0]->{remote_file}] to get major and minor versions" )
-		unless defined $major;
-		
-	return "RELEASE_${major}_${minor}";
+sub _get_time {
+	my( $self ) = @_;
+	require POSIX;
+	POSIX::strftime( '%Y%m%d%H%M%S', localtime );
+	}
+
+=item get_vcs_tag_format
+
+Return the tag format. It's a sprintf-like syntax, but with one format:
+
+	%v  replace with the full version
+	
+If you've set C<> in the configuration, it uses that. Otherwise it
+returns C<release-%v>.
+
+=cut
+
+sub get_vcs_tag_format {
+	my( $self ) = @_;
+	
+	$self->config->get( 'git_default_tag' ) ||
+	'release-%v'
 	}
 
 =back
