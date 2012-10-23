@@ -7,7 +7,7 @@ use Exporter qw(import);
 our @EXPORT = qw(check_vcs vcs_tag make_vcs_tag get_vcs_tag_format _get_time);
 
 use vars qw($VERSION);
-$VERSION = '0.15';
+$VERSION = '0.16';
 
 =head1 NAME
 
@@ -49,7 +49,7 @@ sub check_vcs {
 
 	my( $branch ) = $git_status =~ /^# On branch (\w+)/;
 	
-	my $up_to_date = $git_status =~ /^nothing to commit \(working directory clean\)/m;
+	my $up_to_date = $git_status =~ /working directory clean/m;
 	
 	$self->_die( "\nERROR: Git is not up-to-date: Can't release files\n\n$git_status\n" )
 		unless $up_to_date;
