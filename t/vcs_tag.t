@@ -18,6 +18,16 @@ is passed to it.
 
 =cut
 
+subtest dummy_releaserc => sub {
+	if( -e 'releaserc' ) { return pass( "releaserc exists" ) }
+	my $fh;
+	unless( open $fh, '>', 'releaserc' ) {
+		return fail( "Could not create releaserc: $!" );
+		} 	
+	print { $fh } "cpan_user ADOPTME\n";
+	pass( "Created releaserc" );
+	};
+
 my $release = Module::Release->new;
 $release->load_mixin( $class );
 can_ok( $release, qw(make_vcs_tag vcs_tag) );
@@ -96,4 +106,4 @@ foreach my $case ( @cases ) {
 	is( $main::run_output, $expected_cmd, "command is [$expected_cmd]" );
 	}
 
-done_testing;
+done_testing();
