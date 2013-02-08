@@ -1,5 +1,8 @@
 Changes for Module::Release::Git
 
+0.17 - Thu Feb  7 21:59:27 2013
+	* Require 5.10, since I use some of those features
+
 0.16 - Sat Feb  2 19:21:35 2013
 	* A less restrictive git status match
 
