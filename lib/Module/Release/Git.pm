@@ -7,7 +7,7 @@ use Exporter qw(import);
 our @EXPORT = qw(check_vcs vcs_tag make_vcs_tag get_vcs_tag_format _get_time);
 
 use vars qw($VERSION);
-$VERSION = '0.16';
+$VERSION = '0.17';
 
 =head1 NAME
 
@@ -148,7 +148,7 @@ L<Module::Release::Subversion>, L<Module::Release>
 
 This module is in Github:
 
-	git://github.com/briandfoy/module--release--git.git
+	https://github.com/briandfoy/module-release-git
 
 =head1 AUTHOR
 
