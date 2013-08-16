@@ -15,6 +15,12 @@ WriteMakefile(
 		'Test::More'      => '0.98',
 		'Module::Release' => '2.06',		
 		},
+		
+	META_MERGE => {
+		resources => {
+			repository => 'https://github.com/briandfoy/module-release-git'
+			}
+		},
 
 	META_MERGE => {
 		resources => {
