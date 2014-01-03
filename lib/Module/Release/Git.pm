@@ -7,7 +7,7 @@ use Exporter qw(import);
 our @EXPORT = qw(check_vcs vcs_tag make_vcs_tag get_vcs_tag_format _get_time);
 
 use vars qw($VERSION);
-$VERSION = '0.17';
+$VERSION = '0.18';
 
 =head1 NAME
 
@@ -156,7 +156,7 @@ brian d foy, C<< <bdfoy@cpan.org> >>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2007-2013, brian d foy, All Rights Reserved.
+Copyright (c) 2007-2014, brian d foy, All Rights Reserved.
 
 You may redistribute this under the same terms as Perl itself.
 
