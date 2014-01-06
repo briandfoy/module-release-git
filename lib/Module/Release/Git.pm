@@ -7,7 +7,7 @@ use Exporter qw(import);
 our @EXPORT = qw(check_vcs vcs_tag make_vcs_tag get_vcs_tag_format _get_time);
 
 use vars qw($VERSION);
-$VERSION = '0.18';
+$VERSION = '0.19';
 
 =head1 NAME
 
@@ -126,6 +126,31 @@ sub get_vcs_tag_format {
 	
 	$self->config->get( 'git_default_tag' ) ||
 	'release-%v'
+	}
+
+=item vcs_exit
+
+Perform repo tasks post-release. This one pushes origin to master
+and pushes tags.
+
+=cut
+
+sub vcs_exit {
+	my( $self, $tag ) = @_;
+	
+	$tag ||= $self->make_vcs_tag;
+	
+	$self->_print( "Cleaning up git\n" );
+
+	return 0 unless defined $tag;
+	
+	$self->_print( "Pushing to origin\n" );
+	$self->run( "git push origin master" );
+
+	$self->_print( "Pushing tags\n" );
+	$self->run( "git push --tags" );
+
+	return 1;
 	}
 
 =back
