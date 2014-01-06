@@ -1,5 +1,8 @@
 Changes for Module::Release::Git
 
+0.19 - Mon Jan  6 03:06:21 2014
+	* Implement vcs_tag for post-release repo tasks
+
 0.18 - Fri Jan  3 13:44:04 2014
 	* Get rid of MYMETA
 
