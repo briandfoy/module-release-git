@@ -1,4 +1,4 @@
-use ExtUtils::MakeMaker;
+use ExtUtils::MakeMaker 6.64;
 
 require 5.010;
 
@@ -11,21 +11,29 @@ WriteMakefile(
 	'LICENSE'      => 'perl',
 	'AUTHOR'       => 'brian d foy <bdfoy@cpan.org>',
 	
-	'BUILD_REQUIRES' => { 
-		'Test::More'      => '0.98',
-		'Module::Release' => '2.06',		
-		},
-		
-	META_MERGE => {
-		resources => {
-			repository => 'https://github.com/briandfoy/module-release-git'
-			}
+	'CONFIGURE_REQUIRES' => { 
+		'ExtUtils::MakeMaker' => '6.64',
 		},
 
-	META_MERGE => {
+	'TEST_REQUIRES' => { 
+		'Test::More'      => '0.98',
+		},
+
+	'PREREQ_PM' => {
+		'Module::Release' => '2.06',	
+		},
+
+	'META_MERGE' => {
+		'meta-spec' => { version => 2 },
 		resources => {
-			Repository => 'https://github.com/briandfoy/module-release-git'
-			}
+			repository => {
+				type => 'git',
+				url  => 'git@github.com:briandfoy/module-release-git.git',
+				web  => 'https://github.com/briandfoy/module-release-git',
+				},
+			},
+		keywords => ['workflow', 'module', 'distribution', 
+			'pause', 'automation', 'testing', 'git' ],
 		},
 
 	clean  => { FILES    => q|Module-Release-Git-*| },
