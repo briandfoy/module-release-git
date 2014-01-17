@@ -4,10 +4,12 @@ use strict;
 use warnings;
 use Exporter qw(import);
 
-our @EXPORT = qw(check_vcs vcs_tag make_vcs_tag get_vcs_tag_format _get_time);
+our @EXPORT = qw(
+	check_vcs vcs_tag vcs_exit make_vcs_tag get_vcs_tag_format
+	);
 
 use vars qw($VERSION);
-$VERSION = '0.19';
+$VERSION = '0.20';
 
 =head1 NAME
 
