@@ -1,5 +1,8 @@
 Changes for Module::Release::Git
 
+0.20 - Fri Jan 17 14:53:11 2014
+	* Add vcs_exit to @EXPORT! Oops.
+
 0.19 - Mon Jan  6 03:06:21 2014
 	* Implement vcs_tag for post-release repo tasks
 
