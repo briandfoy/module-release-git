@@ -1,5 +1,8 @@
 Changes for Module::Release::Git
 
+1.01 - Sat Aug 16 17:42:41 2014
+	* Bump to major version
+
 0.20 - Fri Jan 17 14:53:11 2014
 	* Add vcs_exit to @EXPORT! Oops.
 
