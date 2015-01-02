@@ -9,7 +9,7 @@ our @EXPORT = qw(
 	);
 
 use vars qw($VERSION);
-$VERSION = '0.20';
+$VERSION = '1.01';
 
 =head1 NAME
 
