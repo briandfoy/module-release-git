@@ -17,15 +17,15 @@ Changes for Module::Release::Git
 
 0.13 - Fri Aug 21 11:32:16 CDT 2009
 	* The same as 0.12_02, but as a full release
-	
+
 0.12_02 - Sat May  9 03:23:38 2009
 	* Distro cleaning, no big whoop
 
 0.12_01 - Sat Aug  9 03:10:38 2008
-	* Clean up the module to work with the latest version of 
+	* Clean up the module to work with the latest version of
 	Module::Release.
 	* The git command seems to exit with 1 when everything works.
-	I don't know what it exits with when it fails, so don't 
+	I don't know what it exits with when it fails, so don't
 	bother to check for the exit value right now.
 
 0.10_06 - Sat Aug 30 20:23:05 2008
