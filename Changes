@@ -1,4 +1,4 @@
-Changes for Module::Release::Git
+Revision history for Perl module Module::Release::Git
 
 0.20 - Fri Jan 17 14:53:11 2014
 	* Add vcs_exit to @EXPORT! Oops.
