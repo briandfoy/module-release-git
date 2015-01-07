@@ -1,15 +1,16 @@
-use ExtUtils::MakeMaker 6.64;
-
 require 5.010;
+use strict;
+use warnings;
 
-eval "use Test::Manifest 1.21";
+my $github    = 'https://github.com/briandfoy/';
+my $main_file = 'lib/Module/Release/Git.pm';
 
-WriteMakefile(
-	'NAME'	       => 'Module::Release::Git',
-	'ABSTRACT'     => 'Use Git instead of CVS with Module::Release',
-	'VERSION_FROM' => 'lib/Module/Release/Git.pm',
-	'LICENSE'      => 'perl',
-	'AUTHOR'       => 'brian d foy <bdfoy@cpan.org>',
+my %WriteMakefile = (
+	'NAME'	        => 'Module::Release::Git',
+	'ABSTRACT_FROM' => $main_file,
+	'VERSION_FROM'  => $main_file,
+	'LICENSE'       => 'perl',
+	'AUTHOR'        => 'brian d foy <bdfoy@cpan.org>',
 	
 	'CONFIGURE_REQUIRES' => { 
 		'ExtUtils::MakeMaker' => '6.64',
@@ -38,3 +39,23 @@ WriteMakefile(
 
 	clean  => { FILES    => q|Module-Release-Git-*| },
 	);
+
+sub arguments { \%WriteMakefile }
+
+do_it() unless caller;
+sub do_it {
+	require File::Spec;
+	my $MM ='ExtUtils::MakeMaker';
+	my $MM_version =
+		eval{ "$MM " . $WriteMakefile{'CONFIGURE_REQUIRES'}{'ExtUtils::MakeMaker'} }
+			//
+		"$MM 6.64";
+	eval "use $MM_version";
+	eval "use Test::Manifest 1.21" 
+		if -e File::Spec->catfile( qw(t test_manifest) );
+	WriteMakefile( %WriteMakefile );
+	}
+
+
+no warnings;
+__PACKAGE__;
