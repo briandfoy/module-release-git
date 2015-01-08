@@ -1,10 +1,12 @@
 require 5.010;
+
+package Module::Release::Git;
 use strict;
 use warnings;
 
 use File::Spec::Functions qw(catfile);
 
-my $module    = 'Module::Release::Git';
+my $module    = __PACKAGE__;
 my $github    = 'https://github.com/briandfoy/module-release-git';
 my $main_file = catfile( 'lib', split /::/, "$module.pm" );
 
