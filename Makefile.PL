@@ -2,11 +2,14 @@ require 5.010;
 use strict;
 use warnings;
 
-my $github    = 'https://github.com/briandfoy/';
-my $main_file = 'lib/Module/Release/Git.pm';
+use File::Spec::Functions qw(catfile);
+
+my $module    = 'Module::Release::Git';
+my $github    = 'https://github.com/briandfoy/module-release-git';
+my $main_file = catfile( 'lib', split /::/, "$module.pm" );
 
 my %WriteMakefile = (
-	'NAME'	        => 'Module::Release::Git',
+	'NAME'	        => $module,
 	'ABSTRACT_FROM' => $main_file,
 	'VERSION_FROM'  => $main_file,
 	'LICENSE'       => 'perl',
@@ -14,6 +17,9 @@ my %WriteMakefile = (
 	
 	'CONFIGURE_REQUIRES' => { 
 		'ExtUtils::MakeMaker' => '6.64',
+		},
+
+	'BUILD_REQUIRES' => { 
 		},
 
 	'TEST_REQUIRES' => { 
@@ -26,15 +32,19 @@ my %WriteMakefile = (
 
 	'META_MERGE' => {
 		'meta-spec' => { version => 2 },
+		keywords => ['workflow', 'module', 'distribution', 
+			'pause', 'automation', 'testing', 'git' ],
 		resources => {
 			repository => {
 				type => 'git',
-				url  => 'git@github.com:briandfoy/module-release-git.git',
-				web  => 'https://github.com/briandfoy/module-release-git',
+				url  => "$github.git",
+				web  => $github,
 				},
+			bugtraker => {
+				web    => "$github/issues",
+				},
+			homepage => $github,
 			},
-		keywords => ['workflow', 'module', 'distribution', 
-			'pause', 'automation', 'testing', 'git' ],
 		},
 
 	clean  => { FILES    => q|Module-Release-Git-*| },
