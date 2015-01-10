@@ -5,6 +5,8 @@ use warnings;
 use File::Spec::Functions qw(catfile);
 
 my $module    = 'Module::Release::Git';
+( my $dist = $module ) =~ s/::/-/g;
+
 my $github    = 'https://github.com/briandfoy/module-release-git';
 my $main_file = catfile( 'lib', split /::/, "$module.pm" );
 
