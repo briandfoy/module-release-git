@@ -50,7 +50,7 @@ my %WriteMakefile = (
 			},
 		},
 
-	clean  => { FILES    => q|Module-Release-Git-*| },
+	clean => { FILES => "$dist-*" },
 	);
 
 sub arguments { \%WriteMakefile }
