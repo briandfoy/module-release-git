@@ -1,5 +1,6 @@
 Changes
 examples/placeholder.pl
+INSTALL.SKIP
 lib/Module/Release/Git.pm
 LICENSE
 Makefile.PL
