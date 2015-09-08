@@ -11,14 +11,16 @@ our @EXPORT = qw(
 use vars qw($VERSION);
 $VERSION = '1.01';
 
+=encoding utf8
+
 =head1 NAME
 
 Module::Release::Git - Use Git with Module::Release
 
 =head1 SYNOPSIS
 
-The release script automatically loads this module if it sees a 
-F<.git> directory. The module exports C<check_vcs>, C<vcs_tag>, and 
+The release script automatically loads this module if it sees a
+F<.git> directory. The module exports C<check_vcs>, C<vcs_tag>, and
 C<make_vcs_tag>.
 
 =head1 DESCRIPTION
@@ -42,22 +44,22 @@ Check the state of the Git repository.
 
 sub check_vcs {
 	my $self = shift;
-	
+
 	$self->_print( "Checking state of Git... " );
-	
+
 	my $git_status = $self->run('git status 2>&1');
-		
+
 	no warnings 'uninitialized';
 
 	my( $branch ) = $git_status =~ /^# On branch (\w+)/;
-	
+
 	my $up_to_date = $git_status =~ /working directory clean/m;
-	
+
 	$self->_die( "\nERROR: Git is not up-to-date: Can't release files\n\n$git_status\n" )
 		unless $up_to_date;
-	
+
 	$self->_print( "Git up-to-date on branch $branch\n" );
-	
+
 	return 1;
 	}
 
@@ -69,13 +71,13 @@ Tag the release in local Git.
 
 sub vcs_tag {
 	my( $self, $tag ) = @_;
-	
+
 	$tag ||= $self->make_vcs_tag;
-	
+
 	$self->_print( "Tagging release with $tag\n" );
 
 	return 0 unless defined $tag;
-	
+
 	$self->run( "git tag $tag" );
 
 	return 1;
@@ -93,16 +95,16 @@ different tagging scheme, or don't even call it.
 sub make_vcs_tag {
 	my( $self, $tag_format ) = @_;
 	$tag_format = defined $tag_format ? $tag_format : $self->get_vcs_tag_format;
-	
+
 	my $version = eval { $self->dist_version };
 	my $err = $@;
 	unless( defined $version ) {
 		$self->_warn( "Could not get version [$err]" );
 		$version = $self->_get_time;
 		}
-	
+
 	$tag_format =~ s/%v/$version/e;
-	
+
 	return $tag_format;
 	}
 
@@ -117,7 +119,7 @@ sub _get_time {
 Return the tag format. It's a sprintf-like syntax, but with one format:
 
 	%v  replace with the full version
-	
+
 If you've set C<> in the configuration, it uses that. Otherwise it
 returns C<release-%v>.
 
@@ -125,7 +127,7 @@ returns C<release-%v>.
 
 sub get_vcs_tag_format {
 	my( $self ) = @_;
-	
+
 	$self->config->get( 'git_default_tag' ) ||
 	'release-%v'
 	}
@@ -139,13 +141,13 @@ and pushes tags.
 
 sub vcs_exit {
 	my( $self, $tag ) = @_;
-	
+
 	$tag ||= $self->make_vcs_tag;
-	
+
 	$self->_print( "Cleaning up git\n" );
 
 	return 0 unless defined $tag;
-	
+
 	$self->_print( "Pushing to origin\n" );
 	$self->run( "git push origin master" );
 
@@ -156,7 +158,7 @@ sub vcs_exit {
 	}
 
 =back
-	
+
 =head1 TO DO
 
 =over 4
