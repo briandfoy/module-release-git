@@ -1,5 +1,8 @@
 Revision history for Perl module Module::Release::Git
 
+1.011 2016-01-26T19:06:04Z
+	* Freshen the distro.
+
 0.20 - 2014-01-17
 	* Add vcs_exit to @EXPORT! Oops.
 
