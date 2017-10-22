@@ -6,6 +6,7 @@ use Exporter qw(import);
 
 our @EXPORT = qw(
 	check_vcs vcs_tag vcs_exit make_vcs_tag get_vcs_tag_format
+	get_recent_contributors
 	);
 
 use vars qw($VERSION);
@@ -155,6 +156,26 @@ sub vcs_exit {
 	$self->run( "git push --tags" );
 
 	return 1;
+	}
+
+=item get_recent_contributors()
+
+Return a list of contributors since last release.
+
+=cut
+
+sub get_recent_contributors {
+	my $self = shift;
+
+	chomp( my $last_tagged_commit    = $self->run("git rev-list --tags --max-count=1") );
+	chomp( my @commits_from_last_tag = $self->run("git rev-list $last_tagged_commit..HEAD") );
+	my @authors_since_last_tag =
+		map { qx{git show --no-patch --pretty=format:'%an <%ae>' $_} }
+		@commits_from_last_tag;
+	my %authors = map { $_, 1 } @authors_since_last_tag;
+	my @authors = sort keys %authors;
+
+	return @authors;
 	}
 
 =back
