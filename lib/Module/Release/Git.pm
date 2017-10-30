@@ -52,9 +52,9 @@ sub check_vcs {
 
 	no warnings 'uninitialized';
 
-	my( $branch ) = $git_status =~ /^# On branch (\w+)/;
+	my( $branch ) = $git_status =~ /On branch (\w+)/;
 
-	my $up_to_date = $git_status =~ /working directory clean/m;
+	my $up_to_date = $git_status =~ /working (directory|tree) clean/m;
 
 	$self->_die( "\nERROR: Git is not up-to-date: Can't release files\n\n$git_status\n" )
 		unless $up_to_date;
