@@ -10,7 +10,7 @@ our @EXPORT = qw(
 	);
 
 use vars qw($VERSION);
-$VERSION = '1.012';
+$VERSION = '1.013';
 
 =encoding utf8
 
@@ -202,7 +202,7 @@ This module is in Github:
 
 =head1 AUTHOR
 
-brian d foy, C<< <bdfoy@cpan.org> >>
+brian d foy, <bdfoy@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
