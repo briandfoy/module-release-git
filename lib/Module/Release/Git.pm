@@ -10,7 +10,7 @@ our @EXPORT = qw(
 	);
 
 use vars qw($VERSION);
-$VERSION = '1.011';
+$VERSION = '1.012';
 
 =encoding utf8
 
