@@ -208,7 +208,7 @@ brian d foy, <bdfoy@cpan.org>
 
 Copyright © 2007-2018, brian d foy <bdfoy@cpan.org>. All rights reserved.
 
-You may redistribute this under the same terms as Perl itself.
+You may redistribute this under the same terms as the Artistic License 2.0.
 
 =cut
 
