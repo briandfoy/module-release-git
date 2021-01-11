@@ -2,6 +2,15 @@
 
 =encoding utf8
 
+=for HTML <a href='https://ci.appveyor.com/project/briandfoy/module-release-git'><img src='https://ci.appveyor.com/api/projects/status/a'></a>
+
+=for HTML <a href='https://coveralls.io/github/briandfoy/module-release-git?branch=master'><img src='https://coveralls.io/repos/github/briandfoy/module-release-git/badge.svg?branch=master' alt='Coverage Status' /></a>
+
+=for HTML <a href="https://github.com/briandfoy/module-release-git/blob/master/LICENSE"><img src="https://img.shields.io/cpan/l/Module-Release-Git.svg" /></a>
+
+=for HTML <a href="https://metacpan.org/pod/Module::Release::Git"><img src="https://img.shields.io/cpan/v/Module-Release-Git.svg" /></A>
+
+
 =head1 The Module::Release::Git module
 
 This is the I<README> for the L<Module::Release::Git> Perl module. You're probably
