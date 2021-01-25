@@ -78,15 +78,14 @@ use vars qw( $run_output $fine_output $clean_output_git_2x
 	$untrackedfile_output $combined_output
 	);
 
+
+# https://github.com/briandfoy/module-release-git/pull/2
+# This used to be sample output, but Corion used more
+# sophisticated steps that don't require output parsing
 $fine_output = <<"HERE";
-# On branch master
-nothing to commit (working directory clean)
 HERE
 
 $clean_output_git_2x = <<"HERE";
-On branch master
-Your branch is up-to-date with 'origin/master'
-nothing to commit, working tree clean
 HERE
 
 no warnings 'redefine';
