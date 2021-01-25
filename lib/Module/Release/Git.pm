@@ -11,7 +11,7 @@ our @EXPORT = qw(
 	get_recent_contributors
 	);
 
-our $VERSION = '1.014';
+our $VERSION = '1.015';
 
 =encoding utf8
 
