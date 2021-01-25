@@ -9,8 +9,7 @@ our @EXPORT = qw(
 	get_recent_contributors
 	);
 
-use vars qw($VERSION);
-$VERSION = '1.014';
+our $VERSION = '1.014';
 
 =encoding utf8
 
