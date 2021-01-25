@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use vars qw(
-	$output 
+	$output
 	$newfile_output $changedfile_output
 	$untrackedfile_output $combined_output
 	);
@@ -44,16 +44,16 @@ foreach my $try (qw(newfile_output changedfile_output
 	untrackedfile_output combined_output ) )
 	{
 	no strict 'refs';
-	local $Module::Release::Git::run_output = 
+	local $Module::Release::Git::run_output =
 		${ "Module::Release::Git::$try" };
-		
+
 	#print STDERR "try is $Module::Release::Git::run_output\n";
-	
+
 	my $rc = eval { $class->$method() };
 	my $at = $@;
-	
+
 	#print STDERR "At is $@\n";
-	
+
 	ok( defined $at, "(Dirty working dir) \$@ defined (good)" );
 	ok( ! $rc, "(Dirty working dir) returns true (good)" );
 	like( $at, qr/not up-to-date/, "Reports that Git is not up-to-date" );
@@ -62,9 +62,9 @@ foreach my $try (qw(newfile_output changedfile_output
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 =pod
 
-To test these functions, I want to give them some sample git 
+To test these functions, I want to give them some sample git
 output and ensure they do what I want them to do. Instead of
-running git, I override the run() method to return whatever 
+running git, I override the run() method to return whatever
 is in the global variable $output. I can change that during
 the test run to try different things.
 
