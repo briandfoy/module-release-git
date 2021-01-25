@@ -33,6 +33,7 @@ foreach my $try (qw(fine_output clean_output_git_2x)) {
 
 	my $rc = eval { $class->$method() };
 	my $at = $@;
+	diag( "EVAL error: $at" ) if $at;
 
 	ok( ! $at, "(Nothing left to commit) \$@ undef (good)" );
 	ok( $rc, "(Nothing left to commit) returns true (good)" );
