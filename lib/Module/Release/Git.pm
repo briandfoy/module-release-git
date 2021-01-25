@@ -167,7 +167,8 @@ sub get_recent_contributors {
 	my $self = shift;
 
 	chomp( my $last_tagged_commit    = $self->run("git rev-list --tags --max-count=1") );
-	chomp( my @commits_from_last_tag = $self->run("git rev-list $last_tagged_commit..HEAD") );
+	chomp( my @commits_from_last_tag = split /\R/, $self->run("git rev-list $last_tagged_commit..HEAD") );
+
 	my @authors_since_last_tag =
 		map { qx{git show --no-patch --pretty=format:'%an <%ae>' $_} }
 		@commits_from_last_tag;
