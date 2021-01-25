@@ -48,13 +48,13 @@ sub check_vcs {
 
 	$self->_print( "Checking state of Git... " );
 
-	my $git_status = $self->run('git status 2>&1');
+	my $git_status = $self->run('git status -s 2>&1');
 
 	no warnings 'uninitialized';
 
-	my( $branch ) = $git_status =~ /On branch (\w+)/;
+	my( $branch ) = $self->run('git rev-parse --abbrev-ref HEAD');
 
-	my $up_to_date = $git_status =~ /working (directory|tree) clean/m;
+	my $up_to_date = ($git_status eq '');
 
 	$self->_die( "\nERROR: Git is not up-to-date: Can't release files\n\n$git_status\n" )
 		unless $up_to_date;
