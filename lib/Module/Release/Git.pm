@@ -185,6 +185,7 @@ Return the current branch name.
 sub vcs_branch {
 	my( $self ) = @_;
 	my( $branch ) = $self->run('git rev-parse --abbrev-ref HEAD');
+	chomp( $branch );
 	$branch;
 	}
 
