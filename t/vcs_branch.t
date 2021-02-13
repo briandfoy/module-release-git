@@ -138,9 +138,6 @@ subtest allowed_branch => sub {
 			}
 		};
 
-
-
-
 	};
 
 BEGIN { # 5.10 syntax
