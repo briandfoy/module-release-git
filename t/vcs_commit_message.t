@@ -74,7 +74,8 @@ subtest vcs_commit_message_template => sub {
 
 	};
 
-package Local::Config {
+BEGIN { # syntax for v5.10
+	package Local::Config;
 	sub new { bless $_[1], $_[0] }
 	sub DESTROY { 1 }
 	sub AUTOLOAD {
