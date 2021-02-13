@@ -183,8 +183,11 @@ Return the current branch name.
 =cut
 
 sub vcs_branch {
+	state $branch;
+	return $branch if $branch;
+
 	my( $self ) = @_;
-	my( $branch ) = $self->run('git rev-parse --abbrev-ref HEAD');
+	( $branch ) = $self->run('git rev-parse --abbrev-ref HEAD');
 	chomp( $branch );
 	$branch;
 	}
