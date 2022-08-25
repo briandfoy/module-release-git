@@ -61,6 +61,7 @@ my %WriteMakefile = (
 		},
 
 	'TEST_REQUIRES' => {
+		'Module::Release' => '0',
 		'Test::More'      => '1',
 		},
 
