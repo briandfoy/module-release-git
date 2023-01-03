@@ -33,6 +33,12 @@ The release script automatically loads this module if it sees a
 F<.git> directory. The module exports C<check_vcs>, C<vcs_tag>, and
 C<make_vcs_tag>.
 
+For git status checks, you can ignore untracked files by setting
+C<ignore_untracked> in F<.releaserc>:
+
+	# .releaserc
+	ignore_untracked 1
+
 =head1 DESCRIPTION
 
 Module::Release::Git subclasses Module::Release, and provides
