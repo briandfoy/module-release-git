@@ -22,6 +22,16 @@ can_ok( $class, $method );
 can_ok( $class, 'run' );
 is( $class->run, $output );
 
+subtest dummy_releaserc => sub {
+	if( -e 'releaserc' ) { return pass( "releaserc exists" ) }
+	my $fh;
+	unless( open $fh, '>', 'releaserc' ) {
+		return fail( "Could not create releaserc: $!" );
+		}
+	print { $fh } "cpan_user ADOPTME\n";
+	pass( "Created releaserc" );
+	};
+
 my $release = Module::Release->new;
 $release->load_mixin( $class );
 can_ok( $release, $method );
