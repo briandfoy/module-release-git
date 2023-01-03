@@ -48,7 +48,8 @@ This module depends on the external git binary (so far).
 
 =item check_vcs()
 
-Check the state of the Git repository.
+Check the state of the Git repository. If you set the C<ignore_untracked>
+config to a true value, B<git> will not complain about untracked files.
 
 =cut
 
@@ -58,12 +59,19 @@ sub _get_time {
 	POSIX::strftime( '%Y%m%d%H%M%S', localtime );
 	}
 
+sub _git_status_command {
+	my $self = shift;
+	my $opt = $self->config->ignore_untracked ? '-uno' : '';
+	return "git status -s $opt 2>&1";
+	}
+
 sub check_vcs {
 	my $self = shift;
 
 	$self->_print( "Checking state of Git... " );
 
-	my $git_status = $self->run('git status -s 2>&1');
+	my $command = _git_status_command($self);
+	my $git_status = $self->run( $command );
 
 	no warnings 'uninitialized';
 
@@ -188,6 +196,7 @@ sub vcs_branch {
 
 	my( $self ) = @_;
 	( $branch ) = $self->run('git rev-parse --abbrev-ref HEAD');
+	no warnings qw(uninitialized);
 	chomp( $branch );
 	$branch;
 	}
