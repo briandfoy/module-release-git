@@ -1,5 +1,8 @@
 Revision history for Perl module Module::Release::Git
 
+1.018 2024-01-14T18:10:19Z
+	* refresh distro, update email addresses
+
 1.017 2023-01-03T20:22:55Z
 	* Add the ignore_untracked config option so git status check
 	doesn't fail if there are extra files in your repo. This is
