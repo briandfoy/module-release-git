@@ -19,7 +19,7 @@ our @EXPORT = qw(
 	vcs_tag
 	);
 
-our $VERSION = '1.017';
+our $VERSION = '1.018';
 
 =encoding utf8
 
